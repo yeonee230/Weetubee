@@ -1,24 +1,25 @@
 import express from "express";
+import morgan from "morgan";
 
 //앱을 만들고 
 const app = express(); //서버를 만들었다. 
 const PORT = "4000";
+const logger = morgan("dev");// logger middleware 만든다. 
 
 const handleHome = (req, res) => {
    return res.end();
 }
 
+ 
+// const loggerMiddleware = (req, res, next) =>{
+//     console.log(`${req.method} ${req.url}`);
+//     next();
+// };
 
-const loggerMiddleware = (req, res, next) =>{
-    console.log(`${req.method} ${req.url}`);
-    next();
-};
 
 
-
-//middleware를 use하는게 먼저 오고, 그 다음 url의 get이 와야한다. 
-app.use(loggerMiddleware); //.use()는 global middleware를 만들어준다. = 어느 URL에도 작동하는 middleware를 만든다. 
-
+//middleware를 use하는게 먼저 오고, 그 다음 url의 get이 와야한다. 순서가 중요함!
+app.use(logger); //.use()는 global middleware를 만들어준다. = 어느 URL에도 작동하는 middleware를 만든다. 
 
 //root(/) 페이지로 get request 보내면 함수를 동작시킨다. 
 app.get("/",handleHome);
