@@ -16,8 +16,6 @@ const handleHome = (req, res) => {
 //     next();
 // };
 
-
-
 //middleware를 use하는게 먼저 오고, 그 다음 url의 get이 와야한다. 순서가 중요함!
 app.use(logger); //.use()는 global middleware를 만들어준다. = 어느 URL에도 작동하는 middleware를 만든다. 
 
