@@ -1,4 +1,4 @@
-# Routers 정리
+## Planning Routers
 
 1. global routers  
 / -> Home  
@@ -7,12 +7,15 @@
 /search -> Search  
 
 
-2. user routers  
-/user/edit -> Edit user profile  
-/user/delete -> Delete user profile  
+2. user routers    
+/users/edit -> Edit my profile      
+/users/delete -> Delete my profile    
+/users/logout -> Logout  
+/users/:id -> See user profile       
 
 
 3. video routers  
-/video/watch -> Watch video  
-/video/edit -> Edit video  
-/video/delete -> Delete video  
+/videos/upload -> Upload video  
+/videos/:id -> See video  
+/videos/:id/edit -> Edit video  
+/videos/:id/delete -> Delete video  
