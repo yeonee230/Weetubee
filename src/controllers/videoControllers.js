@@ -1,8 +1,18 @@
 import Video from "../models/Video"; //설정해둔 video model가져온다. 
 
 //export 해주면 다른 파일에서 이 함수를 import할 수 있다. 
-export const trending = (req, res) => res.render("home", { pageName : "Home" });
-export const see = (req, res) => res.render("watch", { pageName : "Watch"});
+export const home = async(req, res) => {
+    const videos = await Video.find({});
+    return res.render("home", { pageName : "Home", videos});//home.pug 템플릿으로 videos 어레이를 전달한다. 
+};
+
+export const watch = async (req, res) => {
+    //비디오 id 값을 파라미터에서 받는다.
+    //db에서 해당 비디오 data 값을 id를 통해 찾아서 watch.pug 템플릿으로 보낸다. 
+    const {id} = req.params;
+    const video = await Video.findById(id);
+    return res.render("watch", { pageName : video.title , video})
+};
 export const edit = (req, res) => res.send("edit video! ");
 export const remove = (req, res) => res.send("delete video! ");
 export const search = (req, res) => res.send("search video!");
@@ -21,15 +31,10 @@ export const postUpload = async(req, res) => {
         await Video.create({
             title,
             description,
-            createdAt : Date.now(),
             hashtags : hashtags.split(",").map( word => !word.trim().startsWith("#") ? `#${word.trim()}` : word.trim()),
-            meta : {
-                views : 0,
-                rating : 0,
-            },
         });
         return res.redirect("/");
-        
+
     } catch (error) {
         return res.render("upload",{ 
             pageName : "Upload", 
