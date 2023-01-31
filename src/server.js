@@ -1,4 +1,5 @@
 import "./db";
+import "./models/Video";
 import express from "express";
 import morgan from "morgan";
 //라우터 폴터에서 각 라우터들을 import한다. 
