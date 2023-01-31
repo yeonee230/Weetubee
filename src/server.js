@@ -17,10 +17,15 @@ app.set("views", process.cwd() + "/src/views"); //현재작업폴더(cwd) = node
 //morgan 사용 
 app.use(logger); 
 
+//미들웨어니까..
+//라우터 전에 실행되어야함. req.body값을 express가 인지할 수 있다. (req.body가 undefined으로 나오기 때문에 필요.)
+app.use(express.urlencoded({ extended: true }));
+
 //큰주제가 되는 각 라우터들을 use()에 넣는다. 
 app.use("/",globalRouter);
 app.use("/users",userRouter);
 app.use("/videos",videoRouter);
+
 
 export default app;
 
