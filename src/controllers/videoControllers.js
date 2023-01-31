@@ -11,9 +11,44 @@ export const watch = async (req, res) => {
     //db에서 해당 비디오 data 값을 id를 통해 찾아서 watch.pug 템플릿으로 보낸다. 
     const {id} = req.params;
     const video = await Video.findById(id);
-    return res.render("watch", { pageName : video.title , video})
+
+    if(!video){//비디오가 없을 경우
+        return res.render("404", { pageName : "Video not found!"});
+    };
+
+    return res.render("watch", { pageName : video.title , video});
 };
-export const edit = (req, res) => res.send("edit video! ");
+
+export const getEdit = async (req, res) => {
+    const {id} = req.params;
+    const video = await Video.findById(id);
+
+    if(!video){//비디오가 없을 경우
+        return res.render("404", { pageName : "Video not found!"});
+    }
+
+    return res.render("edit", { pageName : video.title , video});
+};
+
+export const postEdit = async(req, res) =>{
+    const {id} = req.params;
+    const { title, description, hashtags } = req.body;
+    const video = await Video.exists({ _id : id}); //exists() : 해당 id의 비디오가 있냐 없냐만 true/false로 알려줌.
+
+    if(!video){//비디오가 없을 경우 video = false 
+        return res.render("404", { pageName : "Video not found!"});
+    }
+
+    await Video.findByIdAndUpdate( id, {
+        title,
+        description,
+        hashtags : Video.formatHashtags(hashtags),
+    });
+
+    return res.redirect(`/videos/${id}`);
+
+};
+
 export const remove = (req, res) => res.send("delete video! ");
 export const search = (req, res) => res.send("search video!");
 
@@ -31,7 +66,7 @@ export const postUpload = async(req, res) => {
         await Video.create({
             title,
             description,
-            hashtags : hashtags.split(",").map( word => !word.trim().startsWith("#") ? `#${word.trim()}` : word.trim()),
+            hashtags : Video.formatHashtags(hashtags),
         });
         return res.redirect("/");
 
