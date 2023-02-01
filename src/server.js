@@ -2,7 +2,7 @@
 import express from "express";
 import morgan from "morgan";
 //라우터 폴터에서 각 라우터들을 import한다. 
-import globalRouter from "./routers/globalRouters";
+import rootRouter from "./routers/rootRouters";
 import userRouter from "./routers/userRouters";
 import videoRouter from "./routers/videoRouters";
 
@@ -22,7 +22,7 @@ app.use(logger);
 app.use(express.urlencoded({ extended: true }));
 
 //큰주제가 되는 각 라우터들을 use()에 넣는다. 
-app.use("/",globalRouter);
+app.use("/",rootRouter);
 app.use("/users",userRouter);
 app.use("/videos",videoRouter);
 
