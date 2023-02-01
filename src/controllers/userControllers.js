@@ -13,7 +13,7 @@ export const postJoin = async(req, res) => {
 
     //비밀번호 확인 
     if(password !== password2){
-        return res.render("join", {
+        return res.status(400).render("join", {
             pageTitle,
             errorMessage: "Password confirmation does not match.",
           });
@@ -22,7 +22,7 @@ export const postJoin = async(req, res) => {
     //username과 email 중복 검사 방법2
     const exist = await User.exists({ $or : [{username}, {email}] });
     if(exist){
-        return res.render("join",{
+        return res.status(400).render("join",{
             pageTitle,
             errorMessage: "This username/email is already taken.",
         });
@@ -32,14 +32,14 @@ export const postJoin = async(req, res) => {
     //username과 email 중복 검사 방법1
     // const usernameCheck = await User.exists({username});// true or false 리턴
     // if(usernameCheck) {
-    //     return res.render("join",{
+    //     return res.status(400).render("join",{
     //         pageTitle,
     //         errorMessage: "This username is already taken.",
     //     });
     // }
     // const emailCheck = await User.exists({email});// true or false 리턴
     // if(emailCheck) {
-    //     return res.render("join",{
+    //     return res.status(400).render("join",{
     //         pageTitle,
     //         errorMessage: "This email is already taken.",
     //     });
