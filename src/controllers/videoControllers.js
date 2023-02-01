@@ -49,7 +49,17 @@ export const postEdit = async(req, res) =>{
 
 };
 
-export const remove = (req, res) => res.send("delete video! ");
+//비디오 삭제 
+export const delVideo = async(req, res) => {
+    //1. url 파라미터에서 비디오 id 받아온다. 
+    //2. findByIdDelete() 사용한다. 
+    //3. 홈으로 리다이렉트 
+
+    const {id} = req.params;
+    await Video.findByIdAndDelete(id);
+    return res.redirect("/");
+};
+
 export const search = (req, res) => res.send("search video!");
 
 export const getUpload = (req, res) => { 
