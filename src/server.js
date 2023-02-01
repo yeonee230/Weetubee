@@ -2,6 +2,7 @@
 import express from "express";
 import morgan from "morgan";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 //라우터 폴터에서 각 라우터들을 import한다. 
 import rootRouter from "./routers/rootRouters";
 import userRouter from "./routers/userRouters";
@@ -24,9 +25,10 @@ app.use(logger);
 app.use(express.urlencoded({ extended: true }));
 //라우터 전에 실행되어야함. 라우터 앞에 초기화.
 app.use(session({
-    secret : "Hello!",
-    resave : true,
-    saveUninitialized : true,
+    secret : process.env.COOKIE_SECRET,
+    resave : false,
+    saveUninitialized : false,
+    store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
 }));
 
 //session을 읽어야하니까 session 미들웨어 이후, router 이전에 초기화 
