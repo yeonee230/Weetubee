@@ -2,7 +2,7 @@ import Video from "../models/Video"; //설정해둔 video model가져온다.
 
 //export 해주면 다른 파일에서 이 함수를 import할 수 있다. 
 export const home = async(req, res) => {
-    const videos = await Video.find({});
+    const videos = await Video.find({}).sort({createdAt : "desc" });//내림차순 정렬
     return res.render("home", { pageName : "Home", videos});//home.pug 템플릿으로 videos 어레이를 전달한다. 
 };
 
@@ -60,12 +60,35 @@ export const delVideo = async(req, res) => {
     return res.redirect("/");
 };
 
-export const search = (req, res) => res.send("search video!");
+//비디오 검색 
+export const search = async(req, res) => {
+    //1. 검색어를 받는다. 
+    //2. 검색어가 있으면 몽구스 find()를 사용해서 디비에서 검색한다. 
+    //3. 검색결과와 함께 서치 화면을 리턴한다. 
+    const { keyword } = req.query; //get으로 부터 값 받을 때 
+    console.log("req.query : " + keyword);
+    let videos =[];
+    if(keyword){
+        videos = await Video.find({
+            title : keyword,
+            // title: {
+            //     //이건 mongoDB에서 지원하는 기능 
+            //     $regex: new RegExp(`${keyword}$`, "i"), //i는 대,소문자 구분 무시, $ 해당키워드가 마지막에 있을 때 
+            // },
+        });
+    }
+    console.log(`검색 videos : ${videos}`);
+    return res.render("search",{ pageName : "Search", videos});
 
+
+
+}
+
+
+//비디오 업로드 
 export const getUpload = (req, res) => { 
     return res.render("upload",{ pageName : "Upload"});
 };
-
 
 export const postUpload = async(req, res) => {
     const { title, description, hashtags} = req.body;

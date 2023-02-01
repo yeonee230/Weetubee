@@ -7,10 +7,10 @@ import {join, login} from "../controllers/userControllers";
 const globalRouter = express.Router();
 
 //4. globalRouter가 get 할 urls을 설정한다. 
-globalRouter.get("/",home);
-globalRouter.get("/join",join);
+globalRouter.get("/", home);
+globalRouter.get("/join", join);
 globalRouter.get("/login", login);
-globalRouter.get("search", search);
+globalRouter.get("/search", search);
 
 //3. 변수를 export default해준다. export default는 한 파일당 하나만 export 가능하다. 
 export default globalRouter;
