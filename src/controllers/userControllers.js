@@ -19,6 +19,32 @@ export const postJoin = async(req, res) => {
           });
     }
 
+    //username과 email 중복 검사 방법2
+    const exist = await User.exists({ $or : [{username}, {email}] });
+    if(exist){
+        return res.render("join",{
+            pageTitle,
+            errorMessage: "This username/email is already taken.",
+        });
+
+    }
+
+    //username과 email 중복 검사 방법1
+    // const usernameCheck = await User.exists({username});// true or false 리턴
+    // if(usernameCheck) {
+    //     return res.render("join",{
+    //         pageTitle,
+    //         errorMessage: "This username is already taken.",
+    //     });
+    // }
+    // const emailCheck = await User.exists({email});// true or false 리턴
+    // if(emailCheck) {
+    //     return res.render("join",{
+    //         pageTitle,
+    //         errorMessage: "This email is already taken.",
+    //     });
+    // }
+
     //user 정보 디비에 저장 
     await User.create({
         email,
