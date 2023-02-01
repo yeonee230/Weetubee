@@ -1,4 +1,5 @@
 import User from "../models/User";
+import bcrypt from "bcrypt";
 
 //export 해주면 다른 파일에서 이 함수를 import할 수 있다. 
 export const getJoin = (req, res) => {
@@ -44,20 +45,55 @@ export const postJoin = async(req, res) => {
     //         errorMessage: "This email is already taken.",
     //     });
     // }
+    try{
+        //user 정보 디비에 저장 
+        await User.create({
+            email,
+            username,
+            password,
+            name,
+            location,
+        });
+        return res.redirect("/login");
+    }catch(error){
+        return res.status(400).render("join",{
+            pageTitle,
+            errorMessage: "Fail to create an account.",
+        });
 
-    //user 정보 디비에 저장 
-    await User.create({
-        email,
-        username,
-        password,
-        name,
-        location,
-    });
+    }
+    
+   
 
-    return res.redirect("/login");
+   
 };
+
+//사용자 로그인 
+export const getLogin = (req, res) => {
+    return res.render("login",{pageName : "Login"});
+};
+export const postLogin = async (req, res) => {
+    //1.post로 사용자가 입력한 값 받기
+    //2.디비에 값이 존재하는지 확인하고 값 가져오기 findOne()
+    //3.비밀번호 확인 
+    //4.redirect 홈 
+
+    const {username, password} = req.body;
+    const userDB = await User.findOne({username});
+    if(!userDB){//db에 유저 없을 때 
+        return res.status(400).render("login",{errorMessage : "An account with this username does not exists."});
+    }
+    //비밀번호 확인 
+    const ok = await bcrypt.compare(password, userDB.password);
+
+    if(!ok){//비밀번호 틀렸을 때 
+        return res.status(400).render("login",{errorMessage : "Wrong password."});
+    }
+
+    return res.redirect("/");
+};
+
 export const edit = (req, res) => res.render("edit", { pageName : "Edit" });
 export const remove = (req, res) => res.send("delete user profile! ");
-export const login = (req, res) => res.send("user login! ");
 export const logout = (req, res) => res.send("user logout");
 export const see = (req, res) => res.send("see user profile");
