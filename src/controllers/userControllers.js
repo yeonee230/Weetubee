@@ -63,9 +63,6 @@ export const postJoin = async(req, res) => {
 
     }
     
-   
-
-   
 };
 
 //사용자 로그인 
@@ -89,6 +86,10 @@ export const postLogin = async (req, res) => {
     if(!ok){//비밀번호 틀렸을 때 
         return res.status(400).render("login",{errorMessage : "Wrong password."});
     }
+
+    //세션처리 로그인 성공시 해당 정보를 세션에 저장한다. 
+    req.session.loggedIn = true;
+    req.session.user = userDB;
 
     return res.redirect("/");
 };

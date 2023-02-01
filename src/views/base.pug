@@ -4,7 +4,7 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title #{pageName} | Wetube
+        title #{pageName} | #{siteName}
         link(rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css")
     body
         header 
@@ -17,8 +17,16 @@ html(lang="en")
                         a(href="/") HOME
                     li    
                         a(href="/search") Search
-                    li    
-                        a(href="/join") Join
+                    if loggedIn
+                        li    
+                            a(href="/logout") Log out
+                        li    
+                            a(href="/my-profile") #{loggedInUser.name}님의 profile
+                    else    
+                        li    
+                            a(href="/join") Join
+                        li    
+                            a(href="/login") Login    
         main
             block content
 
