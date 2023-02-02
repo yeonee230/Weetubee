@@ -7,8 +7,7 @@ const userRouter = express.Router();
 
 //4. userRouter가 get 할 urls을 설정한다. 
 userRouter.get("/edit", edit);
-userRouter.get("/delete", remove);
-userRouter.get("/logout", logout);
+userRouter.get("/logout", logout); //로그아웃 라우터
 userRouter.get("/:id", see);
 
 

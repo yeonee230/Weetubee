@@ -94,7 +94,13 @@ export const postLogin = async (req, res) => {
     return res.redirect("/");
 };
 
-export const edit = (req, res) => res.render("edit", { pageName : "Edit" });
-export const remove = (req, res) => res.send("delete user profile! ");
-export const logout = (req, res) => res.send("user logout");
+
+//로그아웃 
+export const logout = (req, res) => {
+    //세션 destroy() -> redirect home 
+    req.session.destroy();
+    return res.redirect("/");
+};
+
 export const see = (req, res) => res.send("see user profile");
+export const edit = (req, res) => res.render("edit", { pageName : "Edit" });
