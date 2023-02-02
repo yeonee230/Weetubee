@@ -132,18 +132,27 @@ export const finishGithubLogin = async(req, res) =>{
    
     if( "access_token" in tokenRequest){ //json안에 access_token 이 있으면 
         //access Api 
-        const api_url = "https://api.github.com/user";
+        const api_url = "https://api.github.com";
         const {access_token} = tokenRequest;
         
-        const userRequest = await (await fetch(api_url,{
+        const userData = await (await fetch(`${api_url}/user`,{
                 headers: {
                             Authorization: `Bearer ${access_token}`,
                         },
                 }
             )
         ).json();
-       // console.log(userRequest);
-        return res.send(JSON.stringify(userRequest));
+        //console.log(userData);
+        const emailData = await(
+            await fetch(`${api_url}/user/emails`,{
+                headers: {
+                            Authorization: `Bearer ${access_token}`,
+                        },
+                }
+            )
+        ).json();
+        //console.log(emailData);
+        
 
 
     }else{// json 안에 access_token이 없으면
