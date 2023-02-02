@@ -1,5 +1,6 @@
 import User from "../models/User";
 import bcrypt from "bcrypt";
+import fetch from 'cross-fetch';
 import { redirect } from "express/lib/response";
 
 //export 해주면 다른 파일에서 이 함수를 import할 수 있다. 
@@ -99,7 +100,7 @@ export const postLogin = async (req, res) => {
 export const startGithubLogin =(req, res) =>{
     //깃허브로 url 보내서 user's github identity 요청한다. 
     const base_url = "https://github.com/login/oauth/authorize";
-    const config ={
+    const config = {
         client_id : process.env.GITHUB_CLIENT_ID,
         allow_signup : false,
         scope : "read:user user:email",
@@ -109,7 +110,39 @@ export const startGithubLogin =(req, res) =>{
     return res.redirect(final_url);
 };
 export const finishGithubLogin =(req, res) =>{
-
+    //깃허브로 access_token 요청해야함. 
+    // https://github.com/login/oauth/access_token
+    const base_url = "https://github.com/login/oauth/access_token";
+    const config = {
+        client_id : process.env.GITHUB_CLIENT_ID,
+        client_secret :process.env.GITHUB_CLIENT_SECRET,
+        code: req.query.code,
+    }
+    const params = new URLSearchParams(config).toString();
+    const final_url = `${base_url}?${params}`;
+    //post 로 final_url을 보내고 값을 받는다. 
+    (async () => {
+        try {
+            const resData = await fetch(final_url,{
+                    method: "POST",
+                    headers: {
+                                Accept: "application/json",
+                            },
+                    }
+                );
+            
+            if (res.status >= 400) {
+            throw new Error("Bad response from server");
+            }
+            
+            const userData = await resData.json();
+            console.log(userData);
+        } catch (err) {
+            console.error(err);
+        }
+        })(); 
+    
+    
 };
 
 //로그아웃 
