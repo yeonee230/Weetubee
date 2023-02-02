@@ -94,6 +94,13 @@ export const postLogin = async (req, res) => {
     return res.redirect("/");
 };
 
+//Github 로그인 
+export const startGithubLogin =(req, res) =>{
+
+};
+export const finishGithubLogin =(req, res) =>{
+
+};
 
 //로그아웃 
 export const logout = (req, res) => {
