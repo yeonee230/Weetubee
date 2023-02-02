@@ -78,7 +78,7 @@ export const postLogin = async (req, res) => {
     //4.redirect 홈 
 
     const {username, password} = req.body;
-    const userDB = await User.findOne({username});
+    const userDB = await User.findOne({username, socialOnly:false });
     if(!userDB){//db에 유저 없을 때 
         return res.status(400).render("login",{errorMessage : "An account with this username does not exists."});
     }
@@ -152,7 +152,37 @@ export const finishGithubLogin = async(req, res) =>{
             )
         ).json();
         //console.log(emailData);
-        
+        const emailObj = emailData.find( //이부분 뭔가.. 다시 공부해야할듯 배열 find()함수 사용법. 
+            (email) => email.primary === true && email.verified === true 
+        );
+        //console.log(`emailObj : ${emailObj}`);
+        //github 이메일이 없으면 
+        if(!emailObj){
+            return res.redirect("/login");
+        }
+
+        //깃허브 이메일이 있고, 디비에도 같은 이메일 있는지 확인 
+        const existingUser = await User.findOne({email: emailObj.email});
+        //console.log(`existingUser : ${existingUser}`);
+        if(existingUser){
+            req.session.loggedIn = true;
+            req.session.user = existingUser;
+            return res.redirect("/");
+        }else{
+            const user = await User.create({
+                email : emailObj.email,
+                avatarUrl: userData.avatar_url,
+                username : userData.login,
+                password : "",
+                name : userData.name,
+                location : userData.location,
+                socialOnly : true,
+            });
+            req.session.loggedIn = true;
+            req.session.user = user;
+            return res.redirect("/");
+
+        }
 
 
     }else{// json 안에 access_token이 없으면
