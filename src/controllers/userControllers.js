@@ -1,5 +1,6 @@
 import User from "../models/User";
 import bcrypt from "bcrypt";
+import { redirect } from "express/lib/response";
 
 //export 해주면 다른 파일에서 이 함수를 import할 수 있다. 
 export const getJoin = (req, res) => {
@@ -96,7 +97,16 @@ export const postLogin = async (req, res) => {
 
 //Github 로그인 
 export const startGithubLogin =(req, res) =>{
-
+    //깃허브로 url 보내서 user's github identity 요청한다. 
+    const base_url = "https://github.com/login/oauth/authorize";
+    const config ={
+        client_id : process.env.GITHUB_CLIENT_ID,
+        allow_signup : false,
+        scope : "read:user user:email",
+    };
+    const params = new URLSearchParams(config).toString();
+    const final_url = `${base_url}?${params}`;
+    return res.redirect(final_url);
 };
 export const finishGithubLogin =(req, res) =>{
 
