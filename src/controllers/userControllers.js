@@ -162,27 +162,23 @@ export const finishGithubLogin = async(req, res) =>{
         }
 
         //깃허브 이메일이 있고, 디비에도 같은 이메일 있는지 확인 
-        const existingUser = await User.findOne({email: emailObj.email});
+        let user = await User.findOne({email: emailObj.email});
         //console.log(`existingUser : ${existingUser}`);
-        if(existingUser){
-            req.session.loggedIn = true;
-            req.session.user = existingUser;
-            return res.redirect("/");
-        }else{
-            const user = await User.create({
-                email : emailObj.email,
-                avatarUrl: userData.avatar_url,
-                username : userData.login,
-                password : "",
-                name : userData.name,
-                location : userData.location,
-                socialOnly : true,
-            });
+            if(!user){ //디비에 깃허브 유저가 없으면 유저 계정을 create한다. 
+                user = await User.create({
+                    email : emailObj.email,
+                    avatarUrl: userData.avatar_url,
+                    username : userData.login,
+                    password : "",
+                    name : userData.name,
+                    location : userData.location,
+                    socialOnly : true,
+                });
+            }
+            //유저가 있으면 바로 로그인 실행됨, 유저 없으면 유저 만들고 실행됨. 
             req.session.loggedIn = true;
             req.session.user = user;
             return res.redirect("/");
-
-        }
 
 
     }else{// json 안에 access_token이 없으면
