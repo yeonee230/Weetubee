@@ -109,9 +109,8 @@ export const startGithubLogin =(req, res) =>{
     const final_url = `${base_url}?${params}`;
     return res.redirect(final_url);
 };
-export const finishGithubLogin =(req, res) =>{
+export const finishGithubLogin = async(req, res) =>{
     //깃허브로 access_token 요청해야함. 
-    // https://github.com/login/oauth/access_token
     const base_url = "https://github.com/login/oauth/access_token";
     const config = {
         client_id : process.env.GITHUB_CLIENT_ID,
@@ -121,26 +120,38 @@ export const finishGithubLogin =(req, res) =>{
     const params = new URLSearchParams(config).toString();
     const final_url = `${base_url}?${params}`;
     //post 로 final_url을 보내고 값을 받는다. 
-    (async () => {
-        try {
-            const resData = await fetch(final_url,{
+    const tokenRequest = await (await fetch(final_url,{
                     method: "POST",
                     headers: {
-                                Accept: "application/json",
-                            },
-                    }
-                );
+                            Accept: "application/json",
+                        },
+                }
+            )
+        ).json();
             
-            if (res.status >= 400) {
-            throw new Error("Bad response from server");
-            }
-            
-            const userData = await resData.json();
-            console.log(userData);
-        } catch (err) {
-            console.error(err);
-        }
-        })(); 
+   
+    if( "access_token" in tokenRequest){ //json안에 access_token 이 있으면 
+        //access Api 
+        const api_url = "https://api.github.com/user";
+        const {access_token} = tokenRequest;
+        
+        const userRequest = await (await fetch(api_url,{
+                headers: {
+                            Authorization: `Bearer ${access_token}`,
+                        },
+                }
+            )
+        ).json();
+       // console.log(userRequest);
+        return res.send(JSON.stringify(userRequest));
+
+
+    }else{// json 안에 access_token이 없으면
+        return res.redirect("/login");
+    }
+
+        
+        
     
     
 };
