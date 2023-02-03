@@ -1,7 +1,10 @@
-extends base.pug
+extends ../base
 
 block content 
-    form(method="POST")
+    img(src="/"+loggedInUser.avatarUrl , weith="100px", height="100px")
+    form(method="POST", enctype="multipart/form-data")
+        label(for="Avatar") Avatar
+        input(type="file", name="profileImg", id="avatar", accept="image/*" )
         input(placeholder="Name", name="name", type="txet", value=loggedInUser.name)
         input(placeholder="Email",name="email",type="email", value=loggedInUser.email)
         input(placeholder="Username",name="username",type="txet", value=loggedInUser.username)

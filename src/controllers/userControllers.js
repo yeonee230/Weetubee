@@ -196,7 +196,7 @@ export const logout = (req, res) => {
 
 //user profile edit
 export const getEdit = (req, res) => {
-    return res.render("edit-profile",{pageName : "Edit Profile"});
+    return res.render("users/edit-profile",{pageName : "Edit Profile"});
 };
 
 export const postEdit = async (req, res) => {
@@ -211,11 +211,13 @@ export const postEdit = async (req, res) => {
     const  {name, email, username, location} = req.body;      */
     // ⬇️ ES6 문법으로 바꾸면 
     const {
-            session : {user : {_id}},
-            body : {name, email, username, location},
+            session : {user : {_id , avatarUrl}},
+            body : {name, email, username, location}, file,
     } = req;
+    //console.log(req.file);
 
     const updatedUser = await User.findByIdAndUpdate(_id, {
+        avatarUrl : file ? file.path : avatarUrl,
         name,
         email,
         username,
@@ -244,9 +246,10 @@ export const postChangePW = async (req, res ) => {
     } = req;
     const pageName = "Change Password"
     const user = await User.findById({_id});
-    const currentPWInDB = req.session.user.password;
+    const currentPWInDB = user.password;
+    //const currentPWInDB = req.session.user.password;
     const crrentPWCheck = await bcrypt.compare(currentPW, currentPWInDB);
-    //const okNewPW = 
+    
     if(!crrentPWCheck){
         return res.status(400).render("users/change-password",{pageName,errorMessage : "Not match the current password."});
     }

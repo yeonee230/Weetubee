@@ -1,13 +1,13 @@
 //1. express를 import한다. 
 import express from "express";
 import {getEdit,postEdit , logout, see, startGithubLogin, finishGithubLogin, getChangePW, postChangePW} from "../controllers/userControllers";
-import {protectMiddeleware, publicOnlyMiddleware} from "../middlewares";
+import {protectMiddeleware, publicOnlyMiddleware, uploadImgMiddleware} from "../middlewares";
 
 //2. 변수 설정한다. 
 const userRouter = express.Router();
 
 //4. userRouter가 get 할 urls을 설정한다. 
-userRouter.route("/edit").all(protectMiddeleware).get(getEdit).post(postEdit);
+userRouter.route("/edit").all(protectMiddeleware).get(getEdit).post(uploadImgMiddleware.single("profileImg"), postEdit);
 userRouter.get("/logout", protectMiddeleware, logout); //로그아웃 라우터
 //userRouter.get("/:id", see);
 userRouter.get("/github/start",publicOnlyMiddleware, startGithubLogin);

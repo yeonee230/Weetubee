@@ -34,6 +34,9 @@ app.use(session({
 //session을 읽어야하니까 session 미들웨어 이후, router 이전에 초기화 
 app.use(localsMiddleware);
 
+//multer 미들웨어 
+app.use("/uploads",express.static("uploads"));
+
 //큰주제가 되는 각 라우터들을 use()에 넣는다. 
 app.use("/",rootRouter);
 app.use("/users",userRouter);

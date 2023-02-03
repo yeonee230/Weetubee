@@ -1,3 +1,4 @@
+import multer from "multer";
 
 export const localsMiddleware = (req,res,next) =>{
 //locals에 저장하면 pug 템플릿에서 읽을 수 있다. 
@@ -27,3 +28,6 @@ export const publicOnlyMiddleware = (req, res, next ) => {
     }
 
 };
+
+//multer 이미지 파일 업로드 미들웨어 
+export const uploadImgMiddleware = multer({ dest: 'uploads/' });
