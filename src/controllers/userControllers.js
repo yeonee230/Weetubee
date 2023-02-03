@@ -1,7 +1,7 @@
 import User from "../models/User";
 import bcrypt from "bcrypt";
 import fetch from 'cross-fetch';
-import { redirect } from "express/lib/response";
+import { redirect, render } from "express/lib/response";
 
 //export 해주면 다른 파일에서 이 함수를 import할 수 있다. 
 export const getJoin = (req, res) => {
@@ -226,6 +226,38 @@ export const postEdit = async (req, res) => {
     req.session.user = updatedUser;
     return res.redirect("/users/edit");
 };
+
+//Change password 
+export const getChangePW = (req, res ) => {
+    return res.render("users/change-password",{pageName : "Change Password"});
+}
+
+export const postChangePW = async (req, res ) => {
+    /*  1. 비밀번호 변경 폼으로 부터 비밀번호 정보를 가져온다.
+        2. 현재 비밀번호가 맞는지 확인한다.
+        3. 새 비밀번호(newPW, newPW2)가 같은지 확인한다. 
+        4. 디비에 변경된 비밀번호 저장한다. 
+        5. 세션에 업데이트 해준다. (혹은 로그아웃 해준다. ) */
+    const {
+        session : {user : {_id}},
+        body : {currentPW, newPW, newPW2},
+    } = req;
+    const pageName = "Change Password"
+    const user = await User.findById({_id});
+    const currentPWInDB = req.session.user.password;
+    const crrentPWCheck = await bcrypt.compare(currentPW, currentPWInDB);
+    //const okNewPW = 
+    if(!crrentPWCheck){
+        return res.status(400).render("users/change-password",{pageName,errorMessage : "Not match the current password."});
+    }
+    if(newPW !== newPW2){
+        return res.status(400).render("users/change-password",{pageName,errorMessage : "Not match New Password and New Password Confirmation."});
+    }
+    user.password = newPW; //저장할 때 User에 만들어둔 함수가 해시로 바꿔줌.
+    await user.save();
+
+    return res.redirect("/users/logout");
+}
 
 
 //export const see = (req, res) => res.send("see user profile");

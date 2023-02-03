@@ -7,3 +7,6 @@ block content
         input(placeholder="Username",name="username",type="txet", value=loggedInUser.username)
         input(placeholder="Location",name="location",type="txet", value=loggedInUser.location)
         input(type="submit", value="Edit Profile")
+    if !loggedInUser.socialOnly
+        hr
+        a(href="/users/change-password") Change Password &rarr;
