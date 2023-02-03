@@ -30,4 +30,7 @@ export const publicOnlyMiddleware = (req, res, next ) => {
 };
 
 //multer 이미지 파일 업로드 미들웨어 
-export const uploadImgMiddleware = multer({ dest: 'uploads/' });
+export const uploadImgMiddleware = multer({ dest: 'uploads/avatars/' ,limits : {fileSize : 3000000, } });
+
+//multer 동영상 파일 업로드 미들웨어 
+export const uploadVideoMiddleware = multer({ dest: 'uploads/videos/',limits : {fileSize : 18000000, }});

@@ -16,7 +16,7 @@ export const watch = async (req, res) => {
         return res.status(404).render("404", { pageName : "Video not found!"});
     };
 
-    return res.render("watch", { pageName : video.title , video});
+    return res.render("videos/watch", { pageName : video.title , video});
 };
 
 export const getEdit = async (req, res) => {
@@ -87,17 +87,19 @@ export const search = async(req, res) => {
 
 //비디오 업로드 
 export const getUpload = (req, res) => { 
-    return res.render("upload",{ pageName : "Upload"});
+    return res.render("videos/upload",{ pageName : "Upload"});
 };
 
 export const postUpload = async(req, res) => {
     const { title, description, hashtags} = req.body;
     //console.log(title, description, hashtags);
+    const videoFile = req.file.path; //ES6 문법 -> const { path : videoFile } = req.file;
 
     //mongoDB에 저장하는 두번째 방법 
     try {
         await Video.create({
             title,
+            videoFile,
             description,
             hashtags : Video.formatHashtags(hashtags),
         });
