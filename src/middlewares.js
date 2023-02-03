@@ -6,3 +6,22 @@ export const localsMiddleware = (req,res,next) =>{
     res.locals.loggedInUser = req.session.user || {};
     next();
 };
+
+
+//라우터 보호 1. 로그인한 사용자만 사용 가능. 
+export const protectMiddeleware = (req, res, next) =>{
+    if(req.session.loggedIn){
+        return next();
+    }else{
+        return res.redirect("/login");
+    }
+};
+//라우터 보호 2. 로그인하지 않은 사용자만 사용 가능. 
+export const publicOnlyMiddleware = (req, res, next ) => {
+    if(!req.session.loggedIn){
+        return next();
+    }else{
+        return res.redirect("/");
+    }
+
+};

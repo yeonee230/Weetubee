@@ -12,12 +12,12 @@ export const postJoin = async(req, res) => {
     //2. db에 create()하기 
     //3. 로그인 페이지 리턴 
     const {email,password,password2,name,username,location} = req.body;
-    const pageTitle = "Join";
+    const pageName = "Join";
 
     //비밀번호 확인 
     if(password !== password2){
         return res.status(400).render("join", {
-            pageTitle,
+            pageName,
             errorMessage: "Password confirmation does not match.",
           });
     }
@@ -26,7 +26,7 @@ export const postJoin = async(req, res) => {
     const exist = await User.exists({ $or : [{username}, {email}] });
     if(exist){
         return res.status(400).render("join",{
-            pageTitle,
+            pageName,
             errorMessage: "This username/email is already taken.",
         });
 
@@ -36,14 +36,14 @@ export const postJoin = async(req, res) => {
     // const usernameCheck = await User.exists({username});// true or false 리턴
     // if(usernameCheck) {
     //     return res.status(400).render("join",{
-    //         pageTitle,
+    //         pageName,
     //         errorMessage: "This username is already taken.",
     //     });
     // }
     // const emailCheck = await User.exists({email});// true or false 리턴
     // if(emailCheck) {
     //     return res.status(400).render("join",{
-    //         pageTitle,
+    //         pageName,
     //         errorMessage: "This email is already taken.",
     //     });
     // }
@@ -59,7 +59,7 @@ export const postJoin = async(req, res) => {
         return res.redirect("/login");
     }catch(error){
         return res.status(400).render("join",{
-            pageTitle,
+            pageName,
             errorMessage: "Fail to create an account.",
         });
 
@@ -196,7 +196,7 @@ export const logout = (req, res) => {
 
 //user profile edit
 export const getEdit = (req, res) => {
-    return res.render("edit-profile",{pageTitle : "Edit Profile"});
+    return res.render("edit-profile",{pageName : "Edit Profile"});
 };
 
 export const postEdit = (req, res) => {

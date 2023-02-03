@@ -11,13 +11,13 @@ html(lang="en")
             h1=pageName 
              nav
                 ul
-                    li
-                        a(href="/videos/upload") Upload Video
                     li    
                         a(href="/") HOME
                     li    
                         a(href="/search") Search
                     if loggedIn
+                        li
+                            a(href="/videos/upload") Upload Video
                         li    
                             a(href="/users/logout") Log out
                         li    
