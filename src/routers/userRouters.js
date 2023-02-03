@@ -1,14 +1,14 @@
 //1. express를 import한다. 
 import express from "express";
-import {edit, logout, see, startGithubLogin, finishGithubLogin} from "../controllers/userControllers";
+import {getEdit,postEdit , logout, see, startGithubLogin, finishGithubLogin} from "../controllers/userControllers";
 
 //2. 변수 설정한다. 
 const userRouter = express.Router();
 
 //4. userRouter가 get 할 urls을 설정한다. 
-userRouter.get("/edit", edit);
+userRouter.route("/edit").get(getEdit).post(postEdit);
 userRouter.get("/logout", logout); //로그아웃 라우터
-userRouter.get("/:id", see);
+//userRouter.get("/:id", see);
 userRouter.get("/github/start", startGithubLogin);
 userRouter.get("/github/finish", finishGithubLogin);
 

@@ -184,11 +184,7 @@ export const finishGithubLogin = async(req, res) =>{
     }else{// json 안에 access_token이 없으면
         return res.redirect("/login");
     }
-
-        
-        
-    
-    
+ 
 };
 
 //로그아웃 
@@ -198,5 +194,16 @@ export const logout = (req, res) => {
     return res.redirect("/");
 };
 
-export const see = (req, res) => res.send("see user profile");
-export const edit = (req, res) => res.render("edit", { pageName : "Edit" });
+//user profile edit
+export const getEdit = (req, res) => {
+    return res.render("edit-profile",{pageTitle : "Edit Profile"});
+};
+
+export const postEdit = (req, res) => {
+    return res.render("edit-profile");
+};
+
+
+//export const see = (req, res) => res.send("see user profile");
+
+
