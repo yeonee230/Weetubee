@@ -4,6 +4,8 @@ export const localsMiddleware = (req,res,next) =>{
     res.locals.siteName = "Wetube";
     res.locals.loggedIn = Boolean(req.session.loggedIn); //세션로그인이 true면 
     res.locals.loggedInUser = req.session.user || {};
+    console.log(` session에 있는 사용자 정보 :  ${req.session.user}`);
+    
     next();
 };
 

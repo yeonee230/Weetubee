@@ -199,8 +199,32 @@ export const getEdit = (req, res) => {
     return res.render("edit-profile",{pageName : "Edit Profile"});
 };
 
-export const postEdit = (req, res) => {
-    return res.render("edit-profile");
+export const postEdit = async (req, res) => {
+    /* 1. form 에서 보낸 업데이트 된 user 정보를 받는다. 
+       2. 해당 user를 디비에서 찾고 정보를 업데이트 한다. findByIdUpdate()이용 
+       3. 세션user 정보를 업데이트 한다. 이메일, 유저이름 중복 고려해서 */
+    /*const {_id} = req.session.user._id;
+    const { name,
+            email,
+            username,
+            location } = req. body; 
+    const  {name, email, username, location} = req.body;      */
+    // ⬇️ ES6 문법으로 바꾸면 
+    const {
+            session : {user : {_id}},
+            body : {name, email, username, location},
+    } = req;
+
+    const updatedUser = await User.findByIdAndUpdate(_id, {
+        name,
+        email,
+        username,
+        location,
+    },{
+        new : true,
+    });
+    req.session.user = updatedUser;
+    return res.redirect("/users/edit");
 };
 
 
