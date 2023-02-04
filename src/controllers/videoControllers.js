@@ -16,9 +16,6 @@ export const watch = async (req, res) => {
     //const owner = await User.findById({_id : videoOwner});
     // console.log(`video: ${video}`);
     
-    
-    
-
     if(!video){//비디오가 없을 경우
         return res.status(404).render("404", { pageName : "Video not found!"});
     };
@@ -29,6 +26,11 @@ export const watch = async (req, res) => {
 export const getEdit = async (req, res) => {
     const {id} = req.params;
     const video = await Video.findById(id);
+    const {_id} =req.session.user;
+
+    if(String(video.owner) !== String(_id)){
+        return res.status(403).render("404", { pageName : "Forbbiden! "});
+    }
 
     if(!video){//비디오가 없을 경우
         return res.status(404).render("404", { pageName : "Video not found!"});
@@ -40,10 +42,16 @@ export const getEdit = async (req, res) => {
 export const postEdit = async(req, res) =>{
     const {id} = req.params;
     const { title, description, hashtags } = req.body;
-    const video = await Video.exists({ _id : id}); //exists() : 해당 id의 비디오가 있냐 없냐만 true/false로 알려줌.
+    //const video = await Video.exists({ _id : id}); //exists() : 해당 id의 비디오가 있냐 없냐만 true/false로 알려줌.
+    const video = await Video.findById(id);
+    const {_id} =req.session.user;
 
-    if(!video){//비디오가 없을 경우 video = false 
+    if(!video){
         return res.status(404).render("404", { pageName : "Video not found!"});
+    }
+
+    if(String(video.owner) !== String(_id)){ 
+        return res.status(403).render("404", { pageName : "Forbbiden! "});
     }
 
     await Video.findByIdAndUpdate( id, {
@@ -63,6 +71,17 @@ export const delVideo = async(req, res) => {
     //3. 홈으로 리다이렉트 
 
     const {id} = req.params;
+    const {_id} =req.session.user;
+    const video = await Video.findById(id);
+
+    if(!video){
+        return res.status(404).render("404", { pageName : "Video not found!"});
+    }
+
+    if(String(video.owner) !== String(_id)){
+        return res.status(403).redirect("/");
+    }
+
     await Video.findByIdAndDelete(id);
     return res.redirect("/");
 };
