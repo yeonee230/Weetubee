@@ -22,7 +22,9 @@ const userSchema = new mongoose.Schema({
 
 //비밀번호 저장 전 해시화 
 userSchema.pre("save", async function () {
-    this.password = await bcrypt.hash(this.password, 5);
+    if(this.isModified("password")){
+        this.password = await bcrypt.hash(this.password, 5);
+    }
 });
 
 const userModel = mongoose.model("User", userSchema);
