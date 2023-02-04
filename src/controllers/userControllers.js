@@ -263,6 +263,20 @@ export const postChangePW = async (req, res ) => {
 }
 
 
-//export const see = (req, res) => res.send("see user profile");
+export const seeProfile = async (req, res) => {
+    // 1. 유저프로필을 보는건 public이어야하니까 params에서 유저 id를 가져온다. 
+    // 2. 디비에서 user 정보를 가져온다. findById()
+    // 3. 디비에 유저가 있으면 디비정보 파라미터로 넘기고, 없으면 404화면 보내준다. 
+    //console.log(req.params);
+    const {id} = req.params;
+    const user = await User.findById(id);
+    if(!user){
+        return res.status(404).render("404", { pageName : "User not found!"});
+    }
+    console.log(user);
+    
+    return res.render("users/my-profile",{pageName:`${user.username}의 Profile`,user});
+
+};
 
 
