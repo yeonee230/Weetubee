@@ -1,4 +1,5 @@
 import Video from "../models/Video"; //설정해둔 video model가져온다. 
+import User from "../models/User";
 
 //export 해주면 다른 파일에서 이 함수를 import할 수 있다. 
 export const home = async(req, res) => {
@@ -11,12 +12,16 @@ export const watch = async (req, res) => {
     //db에서 해당 비디오 data 값을 id를 통해 찾아서 watch.pug 템플릿으로 보낸다. 
     const {id} = req.params;
     const video = await Video.findById(id);
+    const owner = await User.findById(video.owner);
+    //const owner = await User.findById({_id : videoOwner});
+    
+    
 
     if(!video){//비디오가 없을 경우
         return res.status(404).render("404", { pageName : "Video not found!"});
     };
 
-    return res.render("videos/watch", { pageName : video.title , video});
+    return res.render("videos/watch", { pageName : video.title , video, owner});
 };
 
 export const getEdit = async (req, res) => {
@@ -94,10 +99,12 @@ export const postUpload = async(req, res) => {
     const { title, description, hashtags} = req.body;
     //console.log(title, description, hashtags);
     const videoFile = req.file.path; //ES6 문법 -> const { path : videoFile } = req.file;
+    const {_id} = req.session.user;
 
     //mongoDB에 저장하는 두번째 방법 
     try {
         await Video.create({
+            owner:_id,
             title,
             videoFile,
             description,
