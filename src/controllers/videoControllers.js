@@ -11,9 +11,11 @@ export const watch = async (req, res) => {
     //비디오 id 값을 파라미터에서 받는다.
     //db에서 해당 비디오 data 값을 id를 통해 찾아서 watch.pug 템플릿으로 보낸다. 
     const {id} = req.params;
-    const video = await Video.findById(id);
-    const owner = await User.findById(video.owner);
+    const video = await Video.findById(id).populate("owner");
+    //const owner = await User.findById(video.owner);
     //const owner = await User.findById({_id : videoOwner});
+    // console.log(`video: ${video}`);
+    
     
     
 
@@ -21,7 +23,7 @@ export const watch = async (req, res) => {
         return res.status(404).render("404", { pageName : "Video not found!"});
     };
 
-    return res.render("videos/watch", { pageName : video.title , video, owner});
+    return res.render("videos/watch", { pageName : video.title , video});
 };
 
 export const getEdit = async (req, res) => {
