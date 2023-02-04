@@ -105,13 +105,20 @@ export const postUpload = async(req, res) => {
 
     //mongoDB에 저장하는 두번째 방법 
     try {
-        await Video.create({
+        const newVideo = await Video.create({
             owner:_id,
             title,
             videoFile,
             description,
             hashtags : Video.formatHashtags(hashtags),
         });
+        console.log(`video :  ${newVideo}`);
+        
+        const user = await User.findById(newVideo.owner);
+        user.videos.push(newVideo._id);
+        console.log(user.videos);
+        user.save();
+        
         return res.redirect("/");
 
     } catch (error) {

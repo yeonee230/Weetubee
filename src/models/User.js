@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
     password :  { type: String },
     username : {type : String, required : true, trim : true, unique : true },
     location : {type : String, trim : true },
+    videos : [{ type : mongoose.Schema.Types.ObjectId , ref : "Video"}],
 });
 
 //비밀번호 저장 전 해시화 
@@ -24,5 +25,5 @@ userSchema.pre("save", async function () {
     this.password = await bcrypt.hash(this.password, 5);
 });
 
-const userModel = mongoose.model("UserModel", userSchema);
+const userModel = mongoose.model("User", userSchema);
 export default userModel;

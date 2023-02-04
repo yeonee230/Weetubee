@@ -270,14 +270,14 @@ export const seeProfile = async (req, res) => {
     // 3. 디비에 유저가 있으면 디비정보 파라미터로 넘기고, 없으면 404화면 보내준다. 
     //console.log(req.params);
     const {id} = req.params;
-    const user = await User.findById(id);
-    const videos = await Video.find({owner : user.id });
+    const user = await User.findById(id).populate("videos");
+    //const videos = await Video.find({owner : user.id }); // user._id 도 같음.
     if(!user){
         return res.status(404).render("404", { pageName : "User not found!"});
     }
-    console.log(user);
+    //console.log(user);
     
-    return res.render("users/my-profile",{pageName:`${user.username}의 Profile`,user, videos });
+    return res.render("users/my-profile",{pageName:`${user.username}의 Profile`,user, });
 
 };
 

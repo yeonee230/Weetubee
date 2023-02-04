@@ -11,7 +11,7 @@ const videoSchema = new mongoose.Schema({
         views : { type: Number, default: 0,  required : true },
         rating :{ type: Number, default: 0,  required : true },
     },
-    owner :{ type : mongoose.Schema.Types.ObjectId , required: true, ref : "UserModel"},
+    owner :{ type : mongoose.Schema.Types.ObjectId , required: true, ref : "User"},
 });
 
 //모델을 만들기 전에 mongoose middleware를 만든다. 
@@ -27,5 +27,5 @@ videoSchema.static("formatHashtags", function(hashtags) {
     
 })
 
-const videoModel = mongoose.model("video", videoSchema);
+const videoModel = mongoose.model("Video", videoSchema);
 export default videoModel;
