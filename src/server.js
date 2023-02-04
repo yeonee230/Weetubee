@@ -36,6 +36,7 @@ app.use(localsMiddleware);
 
 //multer 미들웨어 
 app.use("/uploads",express.static("uploads"));
+app.use("/static",express.static("assets"));
 
 //큰주제가 되는 각 라우터들을 use()에 넣는다. 
 app.use("/",rootRouter);

@@ -15,7 +15,7 @@
   \*******************************/
 /***/ (() => {
 
-eval("\n\n//# sourceURL=webpack://wetube/./src/client/js/main.js?");
+eval("alert(\"hi\");\n\n//# sourceURL=webpack://wetube/./src/client/js/main.js?");
 
 /***/ })
 
