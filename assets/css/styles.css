@@ -83,6 +83,7 @@ footer {
   text-align: center;
   font-size: 12px;
   opacity: 0.8;
+  margin-top: 50px;
 }
 
 .video-mixin .video-mixin__thumb {
@@ -113,6 +114,14 @@ footer {
   display: grid;
   gap: 50px;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 40px;
+}
+.auth-switch a {
+  text-decoration: underline;
 }
 
 form {
@@ -150,9 +159,9 @@ input[type=submit] {
 }
 
 .social-login {
-  margin-top: 50px;
+  margin-top: 30px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 50px;
+  padding-top: 40px;
 }
 .social-login .social__button--github {
   background-color: transparent;
