@@ -78,6 +78,11 @@ header .header__btn {
   padding: 5px 10px;
   border-radius: 5px;
 }
+header .header__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
 
 footer {
   text-align: center;
@@ -172,12 +177,6 @@ input[type=submit] {
 .social-login .social__button--github {
   background-color: transparent;
   color: azure;
-}
-
-.video__grid {
-  display: grid;
-  gap: 50px;
-  grid-template-columns: repeat(4, 1fr);
 }
 
 .search__form {
