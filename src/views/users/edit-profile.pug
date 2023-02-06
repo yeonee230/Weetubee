@@ -1,7 +1,7 @@
 extends ../base
 
 block content 
-    form(method="POST", enctype="multipart/form-data")
+    form(method="POST", enctype="multipart/form-data").edit-profile__form
         label(for="Avatar") Avatar
         input(type="file", name="profileImg", id="avatar", accept="image/*" )
         input(placeholder="Name", name="name", type="txet", value=loggedInUser.name)
@@ -9,6 +9,6 @@ block content
         input(placeholder="Username",name="username",type="txet", value=loggedInUser.username)
         input(placeholder="Location",name="location",type="txet", value=loggedInUser.location)
         input(type="submit", value="Edit Profile")
-    if !loggedInUser.socialOnly
-        hr
-        a(href="/users/change-password") Change Password &rarr;
+        if !loggedInUser.socialOnly
+            div.edit-profile__password
+                a(href="/users/change-password") Change Password &rarr;
