@@ -3,7 +3,7 @@ import User from "../models/User";
 
 //export 해주면 다른 파일에서 이 함수를 import할 수 있다. 
 export const home = async(req, res) => {
-    const videos = await Video.find({}).sort({createdAt : "desc" });//내림차순 정렬
+    const videos = await Video.find({}).sort({createdAt : "desc" }).populate("owner");//내림차순 정렬
     return res.render("home", { pageName : "Home", videos});//home.pug 템플릿으로 videos 어레이를 전달한다. 
 };
 

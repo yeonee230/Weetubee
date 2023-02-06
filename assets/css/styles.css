@@ -85,6 +85,36 @@ footer {
   opacity: 0.8;
 }
 
+.video-mixin .video-mixin__thumb {
+  height: 140px;
+  border-radius: 7px;
+  width: 100%;
+  background-color: ivory;
+}
+.video-mixin .video-mixin__data {
+  padding: 0px 15px;
+}
+.video-mixin .video-mixin__data .video-mixin__title {
+  font-size: 18px;
+  margin-top: 10px;
+  display: block;
+}
+.video-mixin .video-mixin__data .video-mixin__meta {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.empty__message {
+  margin-bottom: 50px;
+  font-size: 16px;
+}
+
+.video-grid {
+  display: grid;
+  gap: 50px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .video__grid {
   display: grid;
   gap: 50px;
