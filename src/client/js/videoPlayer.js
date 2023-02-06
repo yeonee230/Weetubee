@@ -7,7 +7,9 @@ const totalTime = document.getElementById("totalTime");
 const timeline = document.getElementById("timeline");
 const fullScreenBtn = document.getElementById("fullScreen");
 const videoContainer = document.getElementById("videoContainer");
+const videoControls = document.getElementById("videoControls");
 
+let controlsTimeout = null;
 let volumeValue = 0.5;
 video.volume = volumeValue;
 
@@ -142,6 +144,21 @@ document.onfullscreenchange = () => {
     }
 }
 
+//Video Controls
+const handleMouseover = () => {
+    if(controlsTimeout){
+        clearTimeout(controlsTimeout);
+        controlsTimeout = null;
+    }
+    videoControls.classList.add("showing");
+};
+const handleMouseleave = () => {
+    controlsTimeout = setTimeout(() => { //setTimeout은 브라우저로 부터 실행될때마다 id값을 받는다. 
+        videoControls.classList.remove("showing");
+    },2000);
+    
+};
+
 playBtn.addEventListener("click", handlePlayClick);
 video.addEventListener("play", handlePlay);
 video.addEventListener("pause", handlePause);
@@ -157,3 +174,7 @@ video.addEventListener("timeupdate", handleTimeupdate);
 timeline.addEventListener("input", handleTimeline);
 
 fullScreenBtn.addEventListener("click", handlefullScreen);
+
+video.addEventListener("mouseover", handleMouseover);
+video.addEventListener("mouseleave", handleMouseleave);
+
