@@ -4,6 +4,7 @@ const muteBtn = document.getElementById("mute");
 const volumeRange = document.getElementById("volume");
 const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
+const timeline = document.getElementById("timeline");
 
 let volumeValue = 0.5;
 video.volume = volumeValue;
@@ -100,9 +101,17 @@ function formatTime(targetSeconds) {
 //Duration & Current time
 const handleLoadedmetadata = () => {
   totalTime.innerText = formatTime(Math.floor(video.duration));
+  timeline.max = Math.floor(video.duration);
 };
 const handleTimeupdate = () => {
   currentTime.innerText = timeFormat(Math.floor(video.currentTime));
+  timeline.value = Math.floor(video.currentTime);
+};
+
+//Timeline
+const handleTimeline = (event) => {
+    const {target: {value}} = event; //timeline range의 value 값
+    video.currentTime = value; 
 };
 
 playBtn.addEventListener("click", handlePlayClick);
@@ -116,3 +125,5 @@ volumeRange.addEventListener("change", handleChangeVolumeRange);
 
 video.addEventListener("loadedmetadata", handleLoadedmetadata);
 video.addEventListener("timeupdate", handleTimeupdate);
+
+timeline.addEventListener("input", handleTimeline);
