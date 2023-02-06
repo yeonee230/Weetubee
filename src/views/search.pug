@@ -2,7 +2,7 @@ extends base
 include mixins/video
 
 block content 
-    form(method="GET")
+    form(method="GET").search__form
         input(type="text", name="keyword", placeholder="Search by title") 
         input(type="submit", value="Search Now")
     div.video-grid
