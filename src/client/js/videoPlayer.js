@@ -75,12 +75,34 @@ const handleChangeVolumeRange = (event) => {
   }
 };
 
-//Duration & Current time 
+//Time formatting 방법1
+const timeFormat = (seconds) => {
+    const start = seconds >= 3600 ? 11 : 14 ;
+    return new Date(seconds * 1000).toISOString().substring(start, 19);
+};
+//Time formatting 방법2
+function formatTime(targetSeconds) {
+    const totalSeconds = parseInt(targetSeconds, 10);
+    let hours = Math.floor(totalSeconds / 3600);
+    let minutes = Math.floor((totalSeconds - hours * 3600) / 60);
+    let seconds = totalSeconds - hours * 3600 - minutes * 60;
+    
+    hours = String(hours).padStart(2, "0");
+    minutes = String(minutes).padStart(2, "0");
+    seconds = String(seconds).padStart(2, "0");
+    
+    if (hours === "00") {
+    return `${minutes}:${seconds}`;
+    }
+    return `${hours}:${minutes}:${seconds}`;
+    }
+
+//Duration & Current time
 const handleLoadedmetadata = () => {
-  totalTime.innerText = Math.floor(video.duration);
+  totalTime.innerText = formatTime(Math.floor(video.duration));
 };
 const handleTimeupdate = () => {
-  currentTime.innerText = Math.floor(video.currentTime);
+  currentTime.innerText = timeFormat(Math.floor(video.currentTime));
 };
 
 playBtn.addEventListener("click", handlePlayClick);
