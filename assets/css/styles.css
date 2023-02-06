@@ -115,21 +115,16 @@ footer {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.video__grid {
-  display: grid;
-  gap: 50px;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.search__form {
+form {
   max-width: 420px;
   margin: 0 auto;
-  margin-bottom: 60px;
-  display: flex;
-  align-items: center;
-  position: relative;
+  padding: 30px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
-.search__form input {
+
+input {
   all: unset;
   padding: 16px 20px;
   border-radius: 5px;
@@ -138,7 +133,43 @@ footer {
   margin-bottom: 10px;
   font-size: 16px;
   color: white;
-  width: 95%;
+  width: 90%;
+}
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.social__button,
+input[type=submit] {
+  padding: 12px 20px;
+  border-radius: 5px;
+  background-color: rgba(255, 19, 0, 0.9);
+  text-align: center;
+  cursor: pointer;
+  display: block;
+}
+
+.social-login {
+  margin-top: 50px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 50px;
+}
+.social-login .social__button--github {
+  background-color: transparent;
+  color: azure;
+}
+
+.video__grid {
+  display: grid;
+  gap: 50px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.search__form {
+  margin-bottom: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 .search__form button {
   all: unset;
