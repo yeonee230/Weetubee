@@ -122,11 +122,12 @@ footer {
 }
 
 .search__form {
-  display: flex;
-  flex-direction: column;
   max-width: 420px;
   margin: 0 auto;
   margin-bottom: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 .search__form input {
   all: unset;
@@ -137,11 +138,18 @@ footer {
   margin-bottom: 10px;
   font-size: 16px;
   color: white;
+  width: 95%;
 }
-.search__form input[type=submit] {
+.search__form button {
+  all: unset;
+}
+.search__form button {
+  position: absolute;
+  right: 15px;
+  font-size: 18px;
   background-color: rgba(0, 0, 0, 0.4);
   text-align: center;
-  padding: 10px;
+  cursor: pointer;
 }
 
 a {

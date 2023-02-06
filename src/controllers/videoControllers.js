@@ -101,9 +101,9 @@ export const search = async(req, res) => {
             //     //이건 mongoDB에서 지원하는 기능 
             //     $regex: new RegExp(`${keyword}$`, "i"), //i는 대,소문자 구분 무시, $ 해당키워드가 마지막에 있을 때 
             // },
-        });
+        }).populate("owner");
     }
-    console.log(`검색 videos : ${videos}`);
+    //console.log(`검색 videos : ${videos}`);
     return res.render("search",{ pageName : "Search", videos});
 
 
