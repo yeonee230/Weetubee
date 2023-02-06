@@ -5,6 +5,8 @@ const volumeRange = document.getElementById("volume");
 const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
 const timeline = document.getElementById("timeline");
+const fullScreenBtn = document.getElementById("fullScreen");
+const videoContainer = document.getElementById("videoContainer");
 
 let volumeValue = 0.5;
 video.volume = volumeValue;
@@ -78,25 +80,25 @@ const handleChangeVolumeRange = (event) => {
 
 //Time formatting 방법1
 const timeFormat = (seconds) => {
-    const start = seconds >= 3600 ? 11 : 14 ;
-    return new Date(seconds * 1000).toISOString().substring(start, 19);
+  const start = seconds >= 3600 ? 11 : 14;
+  return new Date(seconds * 1000).toISOString().substring(start, 19);
 };
 //Time formatting 방법2
 function formatTime(targetSeconds) {
-    const totalSeconds = parseInt(targetSeconds, 10);
-    let hours = Math.floor(totalSeconds / 3600);
-    let minutes = Math.floor((totalSeconds - hours * 3600) / 60);
-    let seconds = totalSeconds - hours * 3600 - minutes * 60;
-    
-    hours = String(hours).padStart(2, "0");
-    minutes = String(minutes).padStart(2, "0");
-    seconds = String(seconds).padStart(2, "0");
-    
-    if (hours === "00") {
+  const totalSeconds = parseInt(targetSeconds, 10);
+  let hours = Math.floor(totalSeconds / 3600);
+  let minutes = Math.floor((totalSeconds - hours * 3600) / 60);
+  let seconds = totalSeconds - hours * 3600 - minutes * 60;
+
+  hours = String(hours).padStart(2, "0");
+  minutes = String(minutes).padStart(2, "0");
+  seconds = String(seconds).padStart(2, "0");
+
+  if (hours === "00") {
     return `${minutes}:${seconds}`;
-    }
-    return `${hours}:${minutes}:${seconds}`;
-    }
+  }
+  return `${hours}:${minutes}:${seconds}`;
+}
 
 //Duration & Current time
 const handleLoadedmetadata = () => {
@@ -110,9 +112,35 @@ const handleTimeupdate = () => {
 
 //Timeline
 const handleTimeline = (event) => {
-    const {target: {value}} = event; //timeline range의 value 값
-    video.currentTime = value; 
+  const {
+    target: { value },
+  } = event; //timeline range의 value 값
+  video.currentTime = value;
 };
+
+//Fullsreen
+const handlefullScreen = () => {
+  //버튼 클릭
+  const fullScreen = document.fullscreenElement;
+
+
+  if (fullScreen) {
+    //full screen 이 null 이 아닐때(풀스크린일때) 버튼클릭하면
+    document.exitFullscreen(); //나간다.
+    fullScreenBtn.innerText = "Enter Fullscreen";
+  } else {
+    //fullScreen === null 풀스크린 아닐때 버튼클릭하면
+    videoContainer.requestFullscreen(); //풀스크린 된다.
+    fullScreenBtn.innerText = "exit Fullscreen";
+  }
+};
+//esc 키로 나가면 버튼 변경 
+document.onfullscreenchange = () => {
+    const fullscreen = document.fullscreenElement;
+    if (!fullscreen) {
+    fullScreenBtn.innerText = "Enter Full Screen";
+    }
+}
 
 playBtn.addEventListener("click", handlePlayClick);
 video.addEventListener("play", handlePlay);
@@ -127,3 +155,5 @@ video.addEventListener("loadedmetadata", handleLoadedmetadata);
 video.addEventListener("timeupdate", handleTimeupdate);
 
 timeline.addEventListener("input", handleTimeline);
+
+fullScreenBtn.addEventListener("click", handlefullScreen);
