@@ -9,6 +9,7 @@ const fullScreenBtn = document.getElementById("fullScreen");
 const videoContainer = document.getElementById("videoContainer");
 const videoControls = document.getElementById("videoControls");
 
+let controlsInVideoTimeout = null;
 let controlsTimeout = null;
 let volumeValue = 0.5;
 video.volume = volumeValue;
@@ -125,7 +126,6 @@ const handlefullScreen = () => {
   //버튼 클릭
   const fullScreen = document.fullscreenElement;
 
-
   if (fullScreen) {
     //full screen 이 null 이 아닐때(풀스크린일때) 버튼클릭하면
     document.exitFullscreen(); //나간다.
@@ -136,27 +136,39 @@ const handlefullScreen = () => {
     fullScreenBtn.innerText = "exit Fullscreen";
   }
 };
-//esc 키로 나가면 버튼 변경 
+//esc 키로 나가면 버튼 변경
 document.onfullscreenchange = () => {
-    const fullscreen = document.fullscreenElement;
-    if (!fullscreen) {
+  const fullscreen = document.fullscreenElement;
+  if (!fullscreen) {
     fullScreenBtn.innerText = "Enter Full Screen";
-    }
-}
+  }
+};
 
 //Video Controls
-const handleMouseover = () => {
-    if(controlsTimeout){
-        clearTimeout(controlsTimeout);
-        controlsTimeout = null;
-    }
-    videoControls.classList.add("showing");
+const hideControls = () => videoControls.classList.remove("showing");
+
+const handleMousemove = () => {
+  if (controlsTimeout) {
+    clearTimeout(controlsTimeout);
+    controlsTimeout = null;
+  }
+
+  // timeout id를 받았을 때만 실행됨. (cancel timeout)
+  if (controlsInVideoTimeout) {
+    //controlsInVideoTimeout 안에 숫자 있을 때 실행
+    clearTimeout(controlsInVideoTimeout); // 타임아웃 숫자 지운다.
+    controlsInVideoTimeout = null;
+  }
+
+  //(making timeout)
+  videoControls.classList.add("showing");
+  //setTimeout은 브라우저로 부터 실행될때마다 id값을 받는다.
+  controlsInVideoTimeout = setTimeout(hideControls, 3000);
 };
+
 const handleMouseleave = () => {
-    controlsTimeout = setTimeout(() => { //setTimeout은 브라우저로 부터 실행될때마다 id값을 받는다. 
-        videoControls.classList.remove("showing");
-    },2000);
-    
+  //setTimeout은 브라우저로 부터 실행될때마다 id값을 받는다.
+  controlsTimeout = setTimeout(hideControls, 3000);
 };
 
 playBtn.addEventListener("click", handlePlayClick);
@@ -175,6 +187,5 @@ timeline.addEventListener("input", handleTimeline);
 
 fullScreenBtn.addEventListener("click", handlefullScreen);
 
-video.addEventListener("mouseover", handleMouseover);
+video.addEventListener("mousemove", handleMousemove);
 video.addEventListener("mouseleave", handleMouseleave);
-
