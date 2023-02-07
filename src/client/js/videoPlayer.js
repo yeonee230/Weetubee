@@ -20,15 +20,26 @@ video.volume = volumeValue;
 
 //Play
 const handlePlayClick = (event) => {
-  //if 클릭하면 플레이
-  //else pose
-  if (video.paused) {
-    //paused ===true 멈춤 만약 비디오가 멈춤상태면 클릭하면-> 플레이됨.
+
+  if(video.paused){
     video.play();
-  } else {
+    videoControls.classList.add("showing"); 
+    setTimeout(hideControls, 2000);
+  }else{
     video.pause();
+    videoControls.classList.add("showing"); 
   }
+  // //if 클릭하면 플레이
+  // //else pose
+  // if (video.paused) {
+  //   //paused ===true 멈춤 만약 비디오가 멈춤상태면 클릭하면-> 플레이됨.
+  //   video.play();
+  // } else {
+  //   video.pause();
+  //   //videoControls.classList.add("showing");
+  // }
 };
+
 const handlePlay = () => {//<i class="fa-duotone fa-pause"></i>
 playBtnIcon.classList = "fa-solid fa-pause";//멈춤
 };
@@ -167,13 +178,25 @@ const handleMousemove = () => {
   //(making timeout)
   videoControls.classList.add("showing");
   //setTimeout은 브라우저로 부터 실행될때마다 id값을 받는다.
-  controlsInVideoTimeout = setTimeout(hideControls, 3000);
+  controlsInVideoTimeout = setTimeout(hideControls, 2000);
 };
 
 const handleMouseleave = () => {
   //setTimeout은 브라우저로 부터 실행될때마다 id값을 받는다.
-  controlsTimeout = setTimeout(hideControls, 3000);
+  controlsTimeout = setTimeout(hideControls, 2000);
 };
+
+//Video screen click 
+const handleVideoClick = () => {
+  handlePlayClick();
+  
+};
+
+const handleVideoKeyboard = (event) => {
+  handlePlayClick();
+  
+};
+
 
 playBtn.addEventListener("click", handlePlayClick);
 video.addEventListener("play", handlePlay);
@@ -193,6 +216,9 @@ fullScreenBtn.addEventListener("click", handlefullScreen);
 
 videoContainer.addEventListener("mousemove", handleMousemove);
 videoContainer.addEventListener("mouseleave", handleMouseleave);
+
+video.addEventListener("click", handleVideoClick);
+window.addEventListener("keydown", handleVideoKeyboard);
 
 
 //<i class="fa-solid fa-compress"></i> fullscreen closed
