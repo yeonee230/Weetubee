@@ -96,7 +96,7 @@ export const search = async(req, res) => {
     let videos =[];
     if(keyword){
         videos = await Video.find({
-            title : keyword,
+            title : keyword, //FIXME: 검색 기능 고쳐야함.  
             // title: {
             //     //이건 mongoDB에서 지원하는 기능 
             //     $regex: new RegExp(`${keyword}$`, "i"), //i는 대,소문자 구분 무시, $ 해당키워드가 마지막에 있을 때 
