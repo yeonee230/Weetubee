@@ -194,6 +194,7 @@ const handleVideoClick = () => {
 
 const handleVideoKeyboard = (event) => {
   handlePlayClick();
+  event.preventDefault(); //스페이스바를 누르면 브라우저가 아래로 스크롤 되는 것을 방지하기 위해서
   
 };
 
