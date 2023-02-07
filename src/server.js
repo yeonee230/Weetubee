@@ -39,6 +39,12 @@ app.use(localsMiddleware);
 app.use("/uploads",express.static("uploads"));
 app.use("/static",express.static("assets"));
 
+app.use((req, res, next) => {
+    res.header("Cross-Origin-Embedder-Policy", "require-corp");
+    res.header("Cross-Origin-Opener-Policy", "same-origin");
+    next();
+    });
+
 //큰주제가 되는 각 라우터들을 use()에 넣는다. 
 app.use("/",rootRouter);
 app.use("/users",userRouter);
