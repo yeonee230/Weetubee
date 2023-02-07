@@ -8,6 +8,10 @@ const timeline = document.getElementById("timeline");
 const fullScreenBtn = document.getElementById("fullScreen");
 const videoContainer = document.getElementById("videoContainer");
 const videoControls = document.getElementById("videoControls");
+//icon
+const playBtnIcon = playBtn.querySelector("i");
+const fullScreenBtnIncon = fullScreenBtn.querySelector("i");
+//const muteBtnIcon = muteBtn.querySelector("i");
 
 let controlsInVideoTimeout = null;
 let controlsTimeout = null;
@@ -25,11 +29,11 @@ const handlePlayClick = (event) => {
     video.pause();
   }
 };
-const handlePlay = () => {
-  playBtn.innerText = "멈춤";
+const handlePlay = () => {//<i class="fa-duotone fa-pause"></i>
+playBtnIcon.classList = "fa-solid fa-pause";//멈춤
 };
 const handlePause = () => {
-  playBtn.innerText = "재생";
+  playBtnIcon.classList = "fa-solid fa-play";//재생
 };
 
 //Mute
@@ -129,18 +133,18 @@ const handlefullScreen = () => {
   if (fullScreen) {
     //full screen 이 null 이 아닐때(풀스크린일때) 버튼클릭하면
     document.exitFullscreen(); //나간다.
-    fullScreenBtn.innerText = "Enter Fullscreen";
+    fullScreenBtnIncon.classList = "fa-solid fa-expand"; //open fullscreen
   } else {
     //fullScreen === null 풀스크린 아닐때 버튼클릭하면
     videoContainer.requestFullscreen(); //풀스크린 된다.
-    fullScreenBtn.innerText = "exit Fullscreen";
+    fullScreenBtnIncon.classList = "fa-solid fa-compress";//close fullscreen 
   }
 };
 //esc 키로 나가면 버튼 변경
 document.onfullscreenchange = () => {
   const fullscreen = document.fullscreenElement;
   if (!fullscreen) {
-    fullScreenBtn.innerText = "Enter Full Screen";
+    fullScreenBtnIncon.classList = "fa-solid fa-expand";
   }
 };
 
@@ -187,8 +191,9 @@ timeline.addEventListener("input", handleTimeline);
 
 fullScreenBtn.addEventListener("click", handlefullScreen);
 
-video.addEventListener("mousemove", handleMousemove);
-video.addEventListener("mouseleave", handleMouseleave);
+videoContainer.addEventListener("mousemove", handleMousemove);
+videoContainer.addEventListener("mouseleave", handleMouseleave);
+
 
 //<i class="fa-solid fa-compress"></i> fullscreen closed
 //<i class="fa-duotone fa-pause"></i> uaused

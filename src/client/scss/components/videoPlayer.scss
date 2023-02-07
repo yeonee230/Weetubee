@@ -28,11 +28,12 @@
     box-sizing: border-box;
   
     .videoControls__play{
-        display: flex;
+      display: flex;
       align-items: center;
       justify-content: space-around;
       .videoControls__playBtn{
-        margin: 0px 15px;
+        margin: 5px 15px;
+        cursor: pointer;
       }
       .videoControls__time {
         font-size: 12px;
@@ -44,6 +45,7 @@
         align-items: center;
         span {
           margin: 0 10px;
+          cursor: pointer;
           i {
             font-size: 20px;
           }
@@ -51,6 +53,7 @@
     }
 
     .videoControls__fullscreen{
+      cursor: pointer;
         margin-left: 10px;
         margin-right: 20px;
     }
