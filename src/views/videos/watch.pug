@@ -3,18 +3,20 @@ extends ../base
 block content 
     div#videoContainer
         video(src="/"+video.videoFile)
-        div#videoControls
-            button#play Play
-            button#mute Mute
-            div
-                span#currentTime  00:00
-                span  / 
-                span#totalTime 00:00
-            input(type="range", min="0", max="1", value=0.5, step="0.1")#volume
-            div 
-                input(type="range", min="0", value="0", step="1")#timeline
-            div
-                button#fullScreen Enter fullScreen 
+        div#videoControls.videoControls
+            div.videoControls__play
+                span#play.videoControls__playBtn 
+                    i(class="fa-solid fa-play")
+                div.videoControls__time
+                    span#currentTime  00:00
+                    span  / 
+                    span#totalTime 00:00
+            input(type="range", min="0", value="0", step="1")#timeline
+            div.videoControls__volume
+                span#mute Mute
+                input(type="range", min="0", max="1", value=0.5, step="0.1")#volume
+            span#fullScreen.videoControls__fullscreen
+                i(class ="fa-solid fa-expand")
     //-
         div
             p=video.description

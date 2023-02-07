@@ -189,3 +189,8 @@ fullScreenBtn.addEventListener("click", handlefullScreen);
 
 video.addEventListener("mousemove", handleMousemove);
 video.addEventListener("mouseleave", handleMouseleave);
+
+//<i class="fa-solid fa-compress"></i> fullscreen closed
+//<i class="fa-duotone fa-pause"></i> uaused
+//<i class="fa-solid fa-volume-xmark"></i> mute
+//<i class="fa-solid fa-volume"></i> unmute
