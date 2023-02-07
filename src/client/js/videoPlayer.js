@@ -198,6 +198,17 @@ const handleVideoKeyboard = (event) => {
   
 };
 
+//View register
+const handleEndedVideo = () => {
+  const {id} = videoContainer.dataset;
+  // console.log(videoContainer.dataset);
+  // console.log(id);
+  
+  fetch(`/api/videos/${id}/view`,{
+    method : "POST",
+  });
+};
+
 
 playBtn.addEventListener("click", handlePlayClick);
 video.addEventListener("play", handlePlay);
@@ -208,7 +219,7 @@ muteBtn.addEventListener("click", handleMuteClick);
 volumeRange.addEventListener("input", handleVolumeRange);
 volumeRange.addEventListener("change", handleChangeVolumeRange);
 
-video.addEventListener("loadeddata", handleLoadedmetadata);
+video.addEventListener("loadedmetadata", handleLoadedmetadata);
 video.addEventListener("timeupdate", handleTimeupdate);
 
 timeline.addEventListener("input", handleTimeline);
@@ -220,6 +231,8 @@ videoContainer.addEventListener("mouseleave", handleMouseleave);
 
 video.addEventListener("click", handleVideoClick);
 window.addEventListener("keydown", handleVideoKeyboard);
+
+video.addEventListener("ended", handleEndedVideo);
 
 
 //<i class="fa-solid fa-compress"></i> fullscreen closed
