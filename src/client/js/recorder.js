@@ -55,8 +55,9 @@ const handleDownload = async () => {
     URL.revokeObjectURL(thumbUrl);
     URL.revokeObjectURL(videoFile);
     
-    actionBtn.innerText = "Start Recording";
     actionBtn.disabled = false;
+    init();
+    actionBtn.innerText = "Start Recording";
     actionBtn.addEventListener("click",handleStart);
 };
 
