@@ -8,6 +8,7 @@ import rootRouter from "./routers/rootRouters";
 import userRouter from "./routers/userRouters";
 import videoRouter from "./routers/videoRouters";
 import { localsMiddleware } from "./middlewares";
+import apiRouter from "./routers/apiRouter";
 
 const app = express(); //서버를 만들었다. 
 
@@ -42,6 +43,8 @@ app.use("/static",express.static("assets"));
 app.use("/",rootRouter);
 app.use("/users",userRouter);
 app.use("/videos",videoRouter);
+app.use("/api",apiRouter);
+
 
 
 export default app;
