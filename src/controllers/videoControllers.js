@@ -119,7 +119,8 @@ export const getUpload = (req, res) => {
 export const postUpload = async(req, res) => {
     const { title, description, hashtags} = req.body;
     //console.log(title, description, hashtags);
-    const videoFile = req.file.path; //ES6 문법 -> const { path : videoFile } = req.file;
+    //const videoUrl = req.file.path; //ES6 문법 -> const { path : videoUrl } = req.file;
+    const {videoFile,thumbFile} = req.files;
     const {_id} = req.session.user;
 
     //mongoDB에 저장하는 두번째 방법 
@@ -127,7 +128,8 @@ export const postUpload = async(req, res) => {
         const newVideo = await Video.create({
             owner:_id,
             title,
-            videoFile,
+            videoUrl: videoFile[0].path,
+            thumbUrl: thumbFile[0].path,
             description,
             hashtags : Video.formatHashtags(hashtags),
         });

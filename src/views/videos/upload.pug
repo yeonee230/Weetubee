@@ -7,8 +7,10 @@ block content
         video#preview
         button#actionBtn Record Video
     form(method="POST", enctype="multipart/form-data")
-        label(for="video")
+        label(for="video") Video File
         input(type="file", name="videoFile", required, id="video", accept="video/*") 
+        label(for="thumb") Thumbnail Image
+        input(type="file", name="thumbFile", required, id="thumb", accept="image/*") 
         input(placeholder="Title", type="text", required , name="title", maxlength=30 ) 
         input(placeholder="Description", type="text", required , name="description", minlength=20 ) 
         input(placeholder="Hashtags, seperated by comma.", type="text", required , name="hashtags" ) 
