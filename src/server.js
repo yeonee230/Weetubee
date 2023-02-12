@@ -9,6 +9,7 @@ import userRouter from "./routers/userRouters";
 import videoRouter from "./routers/videoRouters";
 import { localsMiddleware } from "./middlewares";
 import apiRouter from "./routers/apiRouter";
+import flash from "express-flash";
 
 const app = express(); //서버를 만들었다. 
 
@@ -34,6 +35,7 @@ app.use(session({
 
 //session을 읽어야하니까 session 미들웨어 이후, router 이전에 초기화 
 app.use(localsMiddleware);
+app.use(flash());
 
 //multer 미들웨어 
 app.use("/uploads",express.static("uploads"));

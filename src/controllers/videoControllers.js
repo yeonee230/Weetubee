@@ -79,6 +79,7 @@ export const delVideo = async(req, res) => {
     }
 
     if(String(video.owner) !== String(_id)){
+        req.flash("error","You're not the owner of video.");
         return res.status(403).redirect("/");
     }
 
@@ -140,6 +141,7 @@ export const postUpload = async(req, res) => {
         console.log(user.videos);
         user.save();
         
+        req.flash("info","Posted a video.");
         return res.redirect("/");
 
     } catch (error) {

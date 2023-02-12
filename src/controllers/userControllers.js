@@ -156,7 +156,7 @@ export const finishGithubLogin = async (req, res) => {
     ).json();
     //console.log(emailData);
     const emailObj = emailData.find(
-      //이부분 뭔가.. 다시 공부해야할듯 배열 find()함수 사용법.
+      //TODO:이부분 뭔가.. 다시 공부해야할듯 배열 find()함수 사용법.
       (email) => email.primary === true && email.verified === true
     );
     //console.log(`emailObj : ${emailObj}`);
@@ -193,7 +193,10 @@ export const finishGithubLogin = async (req, res) => {
 //로그아웃
 export const logout = (req, res) => {
   //세션 destroy() -> redirect home
-  req.session.destroy();
+  req.session.user = null;
+  res.locals.loggedInUser = req.session.user;
+  req.session.loggedIn = false;
+  //req.session.destroy();
   return res.redirect("/");
 };
 
@@ -281,6 +284,7 @@ export const postChangePW = async (req, res) => {
   user.password = newPW; //저장할 때 User에 만들어둔 함수가 해시로 바꿔줌.
   await user.save();
 
+  req.flash("info","Updated Password.");
   return res.redirect("/users/logout");
 };
 
