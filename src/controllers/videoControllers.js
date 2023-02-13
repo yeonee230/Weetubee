@@ -13,7 +13,7 @@ export const watch = async (req, res) => {
     //비디오 id 값을 파라미터에서 받는다.
     //db에서 해당 비디오 data 값을 id를 통해 찾아서 watch.pug 템플릿으로 보낸다. 
     const {id} = req.params;
-    const video = await Video.findById(id).populate("owner");
+    const video = await Video.findById(id).populate("owner").populate("comments");
     //const owner = await User.findById(video.owner);
     //const owner = await User.findById({_id : videoOwner});
     // console.log(`video: ${video}`);
@@ -201,6 +201,8 @@ export const createComment = async(req, res)=>{
         owner:user._id,
         video: id,
     });
+    video.comments.push(newComment._id);
+    video.save();
     
     return res.sendStatus(201);
 
