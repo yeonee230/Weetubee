@@ -25,6 +25,7 @@ app.use(logger);
 //미들웨어니까..
 //라우터 전에 실행되어야함. req.body값을 express가 인지할 수 있다. (req.body가 undefined으로 나오기 때문에 필요.)
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 //라우터 전에 실행되어야함. 라우터 앞에 초기화.
 app.use(session({
     secret : process.env.COOKIE_SECRET,

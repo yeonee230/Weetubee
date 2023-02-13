@@ -8,6 +8,8 @@ const timeline = document.getElementById("timeline");
 const fullScreenBtn = document.getElementById("fullScreen");
 const videoContainer = document.getElementById("videoContainer");
 const videoControls = document.getElementById("videoControls");
+const form = document.getElementById("commentForm");
+const textarea = form.querySelector("textarea");
 //icon
 const playBtnIcon = playBtn.querySelector("i");
 const fullScreenBtnIncon = fullScreenBtn.querySelector("i");
@@ -187,14 +189,18 @@ const handleMouseleave = () => {
 };
 
 //Video screen click 
-const handleVideoClick = () => {
+const handleVideoClick = (event) => {
+  
   handlePlayClick();
   
 };
 
 const handleVideoKeyboard = (event) => {
-  handlePlayClick();
-  event.preventDefault(); //스페이스바를 누르면 브라우저가 아래로 스크롤 되는 것을 방지하기 위해서
+  if((event.target !== textarea) && event.keyCode == 32){
+    event.preventDefault(); //스페이스바를 누르면 브라우저가 아래로 스크롤 되는 것을 방지하기 위해서
+    handlePlayClick();
+  }
+  
   
 };
 
