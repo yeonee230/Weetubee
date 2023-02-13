@@ -25,7 +25,7 @@ block content
     div.video__comments
         ul 
             each comment in video.comments.reverse()
-                li.comment=comment.text
+                li.video__comment=comment.text
     //- //FIXME: 여기도 손 봐야함.
         div
             p=video.description
