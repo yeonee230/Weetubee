@@ -18,10 +18,10 @@ block content
             span#fullScreen.videoControls__fullscreen
                 i(class ="fa-solid fa-expand")
     div.video__data   
-        div
-            p=video.description
-            small=video.createdAt
-        div
+        span.video__title=video.title
+        p.video__description=video.description
+        small.video__createdAt=video.createdAt
+        div.video__owner
             small Uploaded by 
                 a(href=`/users/${video.owner._id}`) #{video.owner.username}
         hr
@@ -29,20 +29,21 @@ block content
             a(href=`${video.id}/edit`) Edit Video &rarr;
             br
             a(href=`${video.id}/delete`) Delete Video &rarr;
-    if loggedIn
-        div.video__comments
-            form.video__comment-form#commentForm
-                textarea(placeholder="Write a nice comment...", cols="30", rows="10")
-                button Add comment
-    div.video__comments
-        ul 
-            each comment in video.comments.reverse()
-                li.video__comment(data-id=comment._id)#videoComment
-                    i.fa-sharp.fa-regular.fa-comment
-                    span  #{comment.text}
-                    if  loggedInUser._id === String(comment.owner._id) 
-                        span#del-btn ❌    
-                        //- i(style="color:red;").fa-regular.fa-x#del-btn
+    div.video__comment-section
+        if loggedIn
+            div.video__comments
+                form.video__comment-form#commentForm
+                    textarea(placeholder="Write a nice comment...")
+                    button Add comment
+        div.video__comments-list
+            ul 
+                each comment in video.comments.reverse()
+                    li.video__comment(data-id=comment._id)#videoComment
+                        i.fa-sharp.fa-regular.fa-comment
+                        span  #{comment.text}
+                        if  loggedInUser._id === String(comment.owner._id) 
+                            span#del-btn ❌    
+                            //- i(style="color:red;").fa-regular.fa-x#del-btn
     
 
 block scripts 
