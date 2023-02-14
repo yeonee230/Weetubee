@@ -1,8 +1,20 @@
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
 
+const addComment = (text) => {
+ const videoComments = document.querySelector(".video__comments ul");
+ const newComment = document.createElement("li");
+ const icon = document.createElement("i");
+ const span = document.createElement("span");
+ newComment.className="video__comment";
+ icon.className = "fa-sharp fa-regular fa-comment";
+ span.innerText = ` ${text}`;
+ newComment.appendChild(icon);
+ newComment.appendChild(span);
+ videoComments.prepend(newComment);
 
-const handleSubmit = (event) => {
+};
+const handleSubmit = async (event) => {
     const textarea = form.querySelector("textarea");
     event.preventDefault();
     
@@ -13,7 +25,7 @@ const handleSubmit = (event) => {
     if (text.trim() === "") { //comment에 아무것도 입력 안되어 있을 때 
         return;
       }
-    fetch(`/api/videos/${video_id}/comment`,{
+    const {status} = await fetch(`/api/videos/${video_id}/comment`,{
         method : "POST",
         headers: {
             "Content-Type": "application/json",
@@ -23,7 +35,9 @@ const handleSubmit = (event) => {
  
     textarea.value = ""; //text창을 비운다. 
     
-
+    if(status === 201){
+        addComment(text);
+    }
 
 };
 
