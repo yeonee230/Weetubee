@@ -196,6 +196,12 @@ export const createComment = async(req, res)=>{
       if (!video) {
         return res.sendStatus(404);
       }
+
+      const userData = await User.findById(user._id);
+      if (!userData) {
+        return res.sendStatus(404);
+      }
+
     const newComment = await Comment.create({
         text,
         owner:user._id,
@@ -203,8 +209,33 @@ export const createComment = async(req, res)=>{
     });
     video.comments.push(newComment._id);
     video.save();
+    userData.comments.push(newComment._id);
+    userData.save();
     
-    return res.sendStatus(201);
+    return res.status(201).json({ newCommentId : newComment._id });
 
 }
 
+export const deleteComment = async (req, res) =>{
+    //댓글 아이디와 세션 아이디 비교해서 일치하면 삭제 
+    const user = req.session.user; //세션 아이디 === 코멘트 owner id 
+    const commentId = req.params.id; 
+    const comments = await Comment.findById(commentId);
+    //if(user._id === )
+    
+
+    if(String(user._id) === String(comments.owner)){
+       //디비에서 삭제 
+       const del = await Comment.deleteOne({ _id: commentId }); // returns {deletedCount: 1}
+       console.log("삭제성공");
+       if(del.acknowledged){
+           return res.sendStatus(200);
+           //return res.status(200).json({ commentId : commentId });
+       }
+       return res.sendStatus(400);
+       
+    }
+    
+    
+
+};

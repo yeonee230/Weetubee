@@ -17,18 +17,7 @@ block content
                 input(type="range", min="0", max="1", value=0.5, step="0.1")#volume
             span#fullScreen.videoControls__fullscreen
                 i(class ="fa-solid fa-expand")
-    if loggedIn
-        div.video__comments
-            form.video__comment-form#commentForm
-                textarea(placeholder="Write a nice comment...", cols="30", rows="10")
-                button Add comment
-    div.video__comments
-        ul 
-            each comment in video.comments.reverse()
-                li.video__comment
-                    i.fa-sharp.fa-regular.fa-comment
-                    span  #{comment.text}
-    //- //FIXME: 여기도 손 봐야함.
+    div.video__data   
         div
             p=video.description
             small=video.createdAt
@@ -40,6 +29,21 @@ block content
             a(href=`${video.id}/edit`) Edit Video &rarr;
             br
             a(href=`${video.id}/delete`) Delete Video &rarr;
+    if loggedIn
+        div.video__comments
+            form.video__comment-form#commentForm
+                textarea(placeholder="Write a nice comment...", cols="30", rows="10")
+                button Add comment
+    div.video__comments
+        ul 
+            each comment in video.comments.reverse()
+                li.video__comment(data-id=comment._id)#videoComment
+                    i.fa-sharp.fa-regular.fa-comment
+                    span  #{comment.text}
+                    if  loggedInUser._id === String(comment.owner._id) 
+                        span#del-btn ❌    
+                        //- i(style="color:red;").fa-regular.fa-x#del-btn
+    
 
 block scripts 
     script(src="/static/js/videoPlayer.js")
