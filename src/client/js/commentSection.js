@@ -9,7 +9,6 @@ let delBtn = document.querySelectorAll("#del-btn");
 const addComment = (text, id) => {
  const videoComments = document.querySelector(".video__comments-list ul");
  const newComment = document.createElement("li");
- console.log('newComment1 ::',newComment);
  
  const icon = document.createElement("i");
  const span = document.createElement("span");
@@ -17,7 +16,6 @@ const addComment = (text, id) => {
 const span2 = document.createElement("span");
  newComment.className="video__comment";
  newComment.dataset.id = id;
- console.log('newComment2 ::',newComment);
  
  icon.className = "fa-sharp fa-regular fa-comment";
 //  iconX.className = "fa-regular fa-x del-btn";
@@ -25,18 +23,13 @@ const span2 = document.createElement("span");
  span2.innerText = "❌";
  span2.id="del-btn";
 
- console.log('newComment3:: ',newComment);
- newComment.appendChild(icon);
- console.log('newComment icon :: ',newComment);
- newComment.appendChild(span);
- console.log('newComment span :: ',newComment);
- newComment.appendChild(span2);
- console.log('newComment span2(delbtn) :: ',newComment);
-//  newComment.appendChild(iconX);
-console.log('videoComments::',videoComments);
 
+ newComment.appendChild(icon);
+ newComment.appendChild(span);
+ newComment.appendChild(span2);
+//  newComment.appendChild(iconX);
  videoComments.prepend(newComment);
- console.log('newComment completed :: ',newComment);
+
 
 };
 
