@@ -6,7 +6,8 @@ const s3 = new S3Client({
     credentials: {
         accessKeyId : process.env.AWS_ID,
         secretAccessKey : process.env.AWS_SECRET,
-    }
+    },
+    region: "REGION",
 }
     
 );
