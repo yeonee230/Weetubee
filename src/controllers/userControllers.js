@@ -205,6 +205,8 @@ export const getEdit = (req, res) => {
   return res.render("users/edit-profile", { pageName: "Edit Profile" });
 };
 
+const isHeroku = process.env.NODE_ENV === "production";
+
 export const postEdit = async (req, res) => {
   /* 1. form 에서 보낸 업데이트 된 user 정보를 받는다. 
        2. 해당 user를 디비에서 찾고 정보를 업데이트 한다. findByIdUpdate()이용 
@@ -228,7 +230,7 @@ export const postEdit = async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
-      avatarUrl: file ? file.location : avatarUrl,
+      avatarUrl: file ? (isHeroku ? file.location : file.path) : avatarUrl,
       name,
       email,
       username,

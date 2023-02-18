@@ -15,13 +15,16 @@ header
                         a(href="/users/logout") Log out
                     li
                         a(href=`/users/${loggedInUser._id}`) 
-                            if loggedInUser.avatarUrl ===""
+                            if loggedInUser.avatarUrl === ""
                                 span 😁
-                            else 
-                                if loggedInUser.socialOnly
-                                    img.header__avatar(src=loggedInUser.avatarUrl crossorigin)
-                                else 
-                                    img.header__avatar(src="/" + loggedInUser.avatarUrl)
+                            else
+                                if isHeroku
+                                    if loggedInUser.socialOnly
+                                        img.header__avatar(src=loggedInUser.avatarUrl crossorigin)
+                                    else 
+                                        img.header__avatar(src=loggedInUser.avatarUrl crossorigin)
+                                else        
+                                     img.header__avatar(src="/" + loggedInUser.avatarUrl crossorigin)
                 else    
                     li    
                         a(href="/join") Join

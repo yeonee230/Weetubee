@@ -119,6 +119,8 @@ export const getUpload = (req, res) => {
     return res.render("videos/upload",{ pageName : "Upload"});
 };
 
+const isHeroku = process.env.NODE_ENV === "production";
+
 export const postUpload = async(req, res) => {
     const { title, description, hashtags} = req.body;
     //console.log(title, description, hashtags);
@@ -131,8 +133,8 @@ export const postUpload = async(req, res) => {
         const newVideo = await Video.create({
             owner:_id,
             title,
-            videoUrl: videoFile[0].location,
-            thumbUrl: thumbFile[0].location,
+            videoUrl: isHeroku ? videoFile[0].location : videoFile[0].path,
+            thumbUrl:  isHeroku ? thumbFile[0].location : thumbFile[0].path,
             description,
             hashtags : Video.formatHashtags(hashtags),
         });
