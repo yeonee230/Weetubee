@@ -27,7 +27,7 @@ const handleDownload = async () => {
 
     const ffmpeg = createFFmpeg({ log: true });
     await ffmpeg.load();
-    ffmpeg.FS("writeFile", file.input, await fetchFile(videoFile));
+    await ffmpeg.FS("writeFile", file.input, await fetchFile(videoFile));
     await ffmpeg.run("-i", file.input, "-r", "60",file.output); //영상을 초당 60프레임으로 인코딩
     await ffmpeg.run("-i", file.input, "-ss", "00:00:01", "-frames:v","1", file.thumb);
 
