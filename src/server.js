@@ -48,22 +48,22 @@ app.use("/static",express.static("assets"));
 //     next();
 //     });
 
-    app.use((req, res, next) => {
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept"
-        );
-        next();
-        });
+    // app.use((req, res, next) => {
+    //     res.setHeader("Access-Control-Allow-Origin", "*");
+    //     res.header(
+    //     "Access-Control-Allow-Headers",
+    //     "Origin, X-Requested-With, Content-Type, Accept"
+    //     );
+    //     next();
+    //     });
         
 
-    // app.use((req, res, next) => {
-    //     res.header("Access-Control-Allow-Origin", "*");
-    //     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    //     res.header("Access-Control-Allow-Headers", "content-type");
-    //     next();
-    //   });
+    app.use((req, res, next) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        res.header("Access-Control-Allow-Headers", "content-type");
+        next();
+      });
 
 //큰주제가 되는 각 라우터들을 use()에 넣는다. 
 app.use("/",rootRouter);
