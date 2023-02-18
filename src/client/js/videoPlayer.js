@@ -226,8 +226,13 @@ volumeRange.addEventListener("input", handleVolumeRange);
 volumeRange.addEventListener("change", handleChangeVolumeRange);
 
 //video.addEventListener("loadedmetadata", handleLoadedmetadata);
-video.addEventListener("canplay", handleLoadedmetadata);
-handleLoadedmetadata();
+if (!isNaN(video.duration)) {
+
+  video.addEventListener("canplay", handleLoadedmetadata);
+  handleLoadedmetadata();
+  
+  }
+
 video.addEventListener("timeupdate", handleTimeupdate);
 
 timeline.addEventListener("input", handleTimeline);
