@@ -227,7 +227,7 @@ volumeRange.addEventListener("change", handleChangeVolumeRange);
 
 //video.addEventListener("loadedmetadata", handleLoadedmetadata);
 video.addEventListener("canplay", handleLoadedmetadata);
-handleLoadedData();
+handleLoadedmetadata();
 video.addEventListener("timeupdate", handleTimeupdate);
 
 timeline.addEventListener("input", handleTimeline);
