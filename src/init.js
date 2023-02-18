@@ -6,7 +6,7 @@ import "./models/User";
 import "./models/Comment";
 import app from "./server.js";
 
-const PORT = "4000";
+const PORT = process.env.PORT || 4000;
 //외부 접속을 listening함. 
 const handleListening = () => console.log(`✅ server listening on port ${PORT}`);
 
