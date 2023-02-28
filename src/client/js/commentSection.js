@@ -73,7 +73,6 @@ const handleDelClick = async (event) => {
     //console.log('event::',event);
     const delComment = event.srcElement.parentNode;
     const delCommentId = delComment.dataset.id;
-    console.log('delComment::',delComment);
     
     //const comment_id = comment.dataset.id;
     const response = await fetch(`/api/comments/${delCommentId}`,{
