@@ -1,21 +1,20 @@
-## Planning Routers
+# 📹 Youtube Clone JS
 
-1. global routers  
-/ -> Home  
-/join -> Join  
-/login -> Login  
-/search -> Search  
+## 설명
+JS로 만든 Youtube Clone 사이트 입니다. 
 
+## 홈페이지
+http://weetubee.herokuapp.com/
 
-2. user routers    
-/users/edit -> Edit my profile      
-/users/delete -> Delete my profile    
-/users/logout -> Logout  
-/users/:id -> See user profile       
+## 개발 목표
+* 풀스택으로 개발해보기
+* 주요기능 완성하고 배포하기
 
-
-3. video routers  
-/videos/upload -> Upload video  
-/videos/:id -> See video  
-/videos/:id/edit -> Edit video  
-/videos/:id/delete -> Delete video  
+## 사용 기술
+* Front-end : Pug, JS, SCSS
+* Back-end : NodeJS, Express
+* DB : MongoDB
+## 주요 기능
+* 회원가입/로그인을 할 수 있습니다.  
+* 영상을 업로드/수정/삭제 할 수 있습니다. 
+* 댓글을 추가/삭제할 수 있습니다.
